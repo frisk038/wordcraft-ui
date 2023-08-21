@@ -1,5 +1,5 @@
 <script setup>
-import { NButton, NH1, NSpace, NIcon, NCard, NModal } from 'naive-ui'
+import { NButton, NH1, NSpace, NIcon, NGradientText } from 'naive-ui'
 import { StatsChartOutline, HelpSharp } from '@vicons/ionicons5'
 import { ref } from "vue";
 
@@ -13,7 +13,14 @@ import Help from './Help.vue'
                 <StatsChartOutline />
             </n-icon>
         </n-button>
-        <n-h1>WordCraft</n-h1>
+
+        <n-gradient-text :gradient="{
+            from: '#7209b7',
+            to: '#480ca8'
+        }" :font-size="32">
+            WordCraft
+        </n-gradient-text>
+
         <n-button round @click="showModal = true">
             <n-icon>
                 <HelpSharp />
