@@ -7,11 +7,13 @@ import Help from './Help.vue'
 </script>
 
 <template>
-    <NSpace justify="space-between" align="center">
-        <n-button round @click="showModal = true">
-            <n-icon>
-                <StatsChartOutline />
-            </n-icon>
+    <NSpace justify="space-evenly" align="center">
+        <n-button circle @click="showModal = true">
+            <template #icon>
+                <n-icon>
+                    <StatsChartOutline />
+                </n-icon>
+            </template>
         </n-button>
 
         <n-gradient-text :gradient="{
@@ -21,15 +23,18 @@ import Help from './Help.vue'
             WordCraft
         </n-gradient-text>
 
-        <n-button round @click="showModal = true">
-            <n-icon>
-                <HelpSharp />
-            </n-icon>
+        <n-button circle @click="showModal = true">
+            <template #icon>
+                <n-icon>
+                    <HelpSharp />
+                </n-icon>
+            </template>
         </n-button>
 
-        <Help v-model:show="showModal"></Help>
+
 
     </NSpace>
+    <Help v-model:show="showModal"></Help>
 </template>
 
 <script>
