@@ -2,6 +2,7 @@
 import TitleBar from "./components/header/TitleBar.vue";
 import { NDivider } from 'naive-ui'
 import Input from "./components/main/Input.vue"
+import KeyBoard from "./components/main/Keyboard.vue"
 </script>
 
 <template>
@@ -12,7 +13,9 @@ import Input from "./components/main/Input.vue"
     <Input />
     <Input />
     <Input />
+    <KeyBoard></KeyBoard>
   </main>
 </template>
 
 <style scoped></style>
+
