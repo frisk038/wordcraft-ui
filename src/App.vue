@@ -10,6 +10,8 @@ import Input from "./components/main/Input.vue"
   </header>
   <main>
     <Input />
+    <Input />
+    <Input />
   </main>
 </template>
 
