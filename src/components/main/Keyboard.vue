@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { NButton, NIcon } from 'naive-ui'
 import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
 
-defineEmits(['typed', 'valid'])
+defineEmits(['type', 'valid'])
 
 const letters = ref(["a", "z", "e", "r", "t", "y", "i", "o", "p", "q", "s", "d", "f", "g", "h"]);
 
@@ -14,7 +14,7 @@ function getSvgPath(item) {
 </script >
 
 <template >
-    <n-button v-for="(item, index) in letters" :key="index" @click="$emit('typed', item)" circle>
+    <n-button v-for="(item, index) in letters" :key="index" @click="$emit('type', item)" circle>
         <template #icon>
             <n-icon>
                 <svg viewBox="0 0 111 111">

@@ -1,21 +1,19 @@
 <script setup>
 import { NInput, NSpace, NIcon, NButton, NCard } from 'naive-ui'
 import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
-import { ref } from "vue";
 
-const word = ref("ff")
-function clear() {
-    word.value = "";
-}
+const emit = defineEmits(['clear', 'newWord'])
+const props = defineProps(['word'])
+
 function check() {
     console.log("check api")
+    emit("newWord")
 }
 </script >
-
 <template>
     <n-space justify="center" align="center">
-        <n-input type="text" size="large" placeholder="votre bafouille" round v-model:value="word" readonly />
-        <n-button circle @click="clear">
+        <n-input type="text" size="large" placeholder="votre bafouille" round v-model:value="props.word" readonly />
+        <n-button circle @click="$emit('clear')">
             <template #icon>
                 <n-icon>
                     <CloseSharp />
@@ -31,7 +29,6 @@ function check() {
         </n-button>
     </n-space>
 </template>
-
 <script>
 
 
