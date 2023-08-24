@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 import { NButton, NIcon } from 'naive-ui'
-import { CloseSharp } from '@vicons/ionicons5'
+import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
 
-const letters = ref(["a", "z", "e", "r", "t", "y", "i", "o", "p", "q", "s", "d", "f", "g", "h",
-    "j", "k", "l", "m", "w", "x", "c", "v", "b", "n"]);
+defineEmits(['typed', 'valid'])
+
+const letters = ref(["a", "z", "e", "r", "t", "y", "i", "o", "p", "q", "s", "d", "f", "g", "h"]);
 
 function getSvgPath(item) {
     return `src/components/letters_svg/${item}.svg#layer1`;
@@ -13,7 +14,7 @@ function getSvgPath(item) {
 </script >
 
 <template >
-    <n-button v-for="(item, index) in letters" :key="index" circle>
+    <n-button v-for="(item, index) in letters" :key="index" @click="$emit('typed', item)" circle>
         <template #icon>
             <n-icon>
                 <svg viewBox="0 0 111 111">
@@ -22,12 +23,15 @@ function getSvgPath(item) {
             </n-icon>
         </template>
     </n-button>
+    <n-button @click="$emit('valid')" circle>
+        <template #icon>
+            <n-icon>
+                <CheckmarkSharp></CheckmarkSharp>
+            </n-icon>
+        </template>
+    </n-button>
 </template>
 
 <script>
-export default {
-
-
-}
 </script>
 <style ></style>

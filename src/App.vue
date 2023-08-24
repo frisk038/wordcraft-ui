@@ -13,7 +13,7 @@ import KeyBoard from "./components/main/Keyboard.vue"
     <Input />
     <Input />
     <Input />
-    <KeyBoard></KeyBoard>
+    <KeyBoard @typed="(n) => console.log(n)" @valid="() => console.log('validation')"></KeyBoard>
   </main>
 </template>
 
