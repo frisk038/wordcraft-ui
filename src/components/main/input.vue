@@ -1,13 +1,15 @@
 <script setup>
 import { NInput, NSpace, NIcon, NButton, NCard } from 'naive-ui'
-import { CloseSharp } from '@vicons/ionicons5'
+import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
 import { ref } from "vue";
 
 const word = ref("ff")
 function clear() {
     word.value = "";
 }
-
+function check() {
+    console.log("check api")
+}
 </script >
 
 <template>
@@ -17,6 +19,13 @@ function clear() {
             <template #icon>
                 <n-icon>
                     <CloseSharp />
+                </n-icon>
+            </template>
+        </n-button>
+        <n-button @click="check" circle>
+            <template #icon>
+                <n-icon>
+                    <CheckmarkSharp />
                 </n-icon>
             </template>
         </n-button>
