@@ -1,7 +1,7 @@
 <script setup>
 import TitleBar from "./components/header/TitleBar.vue";
 import { NGrid, NGridItem } from 'naive-ui'
-import Input from "./components/main/input.vue"
+import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
 import { ref } from 'vue'
 
