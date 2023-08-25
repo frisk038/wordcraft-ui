@@ -11,7 +11,7 @@ const secondRow = letters.value.slice(5)
 
 
 function getSvgPath(item) {
-    return `./components/letters_svg/${item}.svg#layer1`
+    return `/components/letters_svg/${item}.svg#layer1`
 }
 </script>
 
