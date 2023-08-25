@@ -1,6 +1,6 @@
 <script setup>
 import TitleBar from "./components/header/TitleBar.vue";
-import { NDivider } from 'naive-ui'
+import { NGrid, NGridItem } from 'naive-ui'
 import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
 import { ref } from 'vue'
@@ -27,10 +27,20 @@ function newWord() {
     <TitleBar></TitleBar>
   </header>
   <main>
-    <Input :word="inputs[0].value" @clear="clear(0)" @newWord="newWord" />
-    <Input :word="inputs[1].value" @clear="clear(1)" @newWord="newWord" />
-    <Input :word="inputs[2].value" @clear="clear(2)" @newWord="newWord" />
-    <KeyBoard @type="type" @valid="() => console.log('validation')"></KeyBoard>
+    <n-grid :cols="1" :y-gap="10">
+      <n-grid-item :suffix="true">
+        <Input :word="inputs[0].value" @clear="clear(0)" @newWord="newWord" />
+      </n-grid-item>
+      <n-grid-item>
+        <Input :word="inputs[1].value" @clear="clear(1)" @newWord="newWord" />
+      </n-grid-item>
+      <n-grid-item>
+        <Input :word="inputs[2].value" @clear="clear(2)" @newWord="newWord" />
+      </n-grid-item>
+      <n-grid-item>
+        <KeyBoard @type="type" @valid="() => console.log('validation')" />
+      </n-grid-item>
+    </n-grid>
   </main>
 </template>
 

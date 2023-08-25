@@ -24,9 +24,8 @@ function check() {
 </script >
 <template>
     <n-spin :show="checking" size="small">
-
         <n-space justify="center" align="center">
-            <n-statistic label="Valeur">
+            <n-statistic label="Score">
                 <n-number-animation :active="isValidated" :from="0" :to="score" />
             </n-statistic>
 
