@@ -9,10 +9,9 @@ const letters = ref(["a", "z", "e", "r", "t", "y", "i", "o", "p"])
 const firstRow = letters.value.slice(0, 5)
 const secondRow = letters.value.slice(5)
 
-
 function getSvgPath(item) {
-    // let src = require.contsext('@/assets/', false);
-    return `./src/assets/letters_svg/${item}.svg#layer1`
+    // return new URL(`./src/assets/letters_svg/${item}.svg#layer1`)
+    return `assets/letters_svg/${item}.svg#layer1`
 }
 </script>
 
@@ -24,7 +23,7 @@ function getSvgPath(item) {
                     <template #icon>
                         <n-icon>
                             <svg viewBox="0 0 111 111">
-                                <use :xlink:href="getSvgPath(item)" />
+                                <use :href="getSvgPath(item)" />
                             </svg>
                         </n-icon>
                     </template>
@@ -57,3 +56,6 @@ function getSvgPath(item) {
 </template>
 
   
+<script>
+
+</script>
