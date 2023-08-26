@@ -5,14 +5,29 @@ import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
 
 defineEmits(['type', 'valid'])
 
-const letters = ref(["a", "z", "e", "r", "t", "y", "i", "o", "p"])
-const firstRow = letters.value.slice(0, 5)
-const secondRow = letters.value.slice(5)
+const letters = ref([])
+const gameID = ref("")
+var firstRow = []
+var secondRow = []
 
 function getSvgPath(item) {
-    // return new URL(`./src/assets/letters_svg/${item}.svg#layer1`)
     return `assets/letters_svg/${item}.svg#layer1`
 }
+
+async function getLetters() {
+    let response = await fetch("https://wordcraft-397020.ew.r.appspot.com/pick/getLetters")
+    if (response.ok) {
+        const js = await response.json();
+        letters.value = js.letters
+        gameID.value = js.id
+        firstRow = letters.value.slice(0, 5)
+        secondRow = letters.value.slice(5)
+    } else {
+        return Promise.reject(response);
+    }
+}
+
+const res = await getLetters()
 </script>
 
 <template>
@@ -45,7 +60,7 @@ function getSvgPath(item) {
             </n-grid-item>
         </n-grid>
 
-        <n-button @click="$emit('valid')" circle>
+        <n-button @click="$emit('valid', gameID)" circle>
             <template #icon>
                 <n-icon>
                     <CheckmarkSharp />

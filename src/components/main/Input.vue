@@ -5,21 +5,36 @@ import { ref } from 'vue'
 
 const emit = defineEmits(['clear', 'newWord'])
 const props = defineProps(['word'])
-
 const score = ref(10)
 const checking = ref(false)
 const isValidated = ref(false)
 
-function check() {
+async function checkAPI(wordToCheck) {
+    let response = await fetch("https://wordcraft-397020.ew.r.appspot.com/pick/checkWord", {
+        method: "POST",
+        body: JSON.stringify({ word: wordToCheck })
+    })
+    if (response.ok) {
+        return await response.json();
+    } else {
+        return Promise.reject(response);
+    }
+}
+
+async function check() {
     if (props.word === "" || props.word.length < 2) return;
 
     checking.value = true
-    console.log("checking if " + props.word + " is valid")
-    setTimeout(() => {
-        checking.value = false
+    let scoreRes = await checkAPI(props.word)
+    if (scoreRes.exists === true) {
+        score.value = scoreRes.score
         isValidated.value = true
-    }, 2000);
-    emit("newWord")
+        emit("newWord", score.value)
+    }
+    else {
+        emit("clear")
+    }
+    checking.value = false
 }
 </script >
 <template>
