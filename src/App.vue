@@ -4,38 +4,97 @@ import { NGrid, NGridItem, NIcon, NButton } from 'naive-ui'
 import { BulbOutline, BulbSharp } from '@vicons/ionicons5'
 import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
+import EndScreen from "./components/main/Endscreen.vue"
 import { ref } from 'vue'
 
 const inputs = [ref(""), ref(""), ref("")]
+const inputsValidated = [ref(false), ref(false), ref(false)]
+
 var currentInput = 0
 var finalScore = 0
+var gameFinished = ref(false)
+var userID = ref("")
+var gameID = ref("")
 
+function loadGame() {
+  const str = getCookie("gameDone")
+  gameFinished.value = (str === "true");
+  userID.value = getCookie("userid")
+}
+
+// Cookie helper
+function setCookieAndExpire(cname, cvalue, expire) {
+  document.cookie = cname + "=" + cvalue + ";expires=" + expire.toUTCString();
+}
+function setCookieAndExpireAtMidnight(cname, cvalue) {
+  let date = new Date();
+  let midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
+  setCookieAndExpire(cname, cvalue, midnight)
+}
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+// Event
 function type(letter) {
   inputs[currentInput].value += letter
 }
 function clear(idx) {
-  console.log("cls");
   inputs[idx].value = ""
 }
 function newWord(score) {
+  for (let index = 0; index < currentInput; index++) {
+    const element = inputs[index];
+    if (element.value === inputs[currentInput].value) {
+      clear(currentInput)
+      return
+    }
+  }
+
+  inputsValidated[currentInput].value = true
   finalScore += score
   if (currentInput < 2) {
     currentInput++
   }
 }
-async function registerGame(id) {
+async function loadUser() {
+  userID.value = getCookie("userid")
+  registerGameAPI()
+}
+async function registerGameAPI() {
   let response = await fetch("https://wordcraft-397020.ew.r.appspot.com/user/score", {
     method: "POST",
     body: JSON.stringify({
-      user: "63f3e957-0baf-499f-b449-88885325d7a4",
-      pick: id, score: finalScore
+      user: userID.value,
+      pick: gameID.value, score: finalScore
     })
   })
-
   if (!response.ok) {
     return Promise.reject(response);
   }
 }
+async function registerGame(id) {
+  gameID.value = id
+  gameFinished.value = true
+  setCookieAndExpireAtMidnight("gameDone", true)
+
+  if (userID.value != "") {
+    registerGameAPI()
+  }
+}
+
+loadGame()
 </script>
 
 <template>
@@ -46,13 +105,13 @@ async function registerGame(id) {
 
     <n-grid :cols="1" :y-gap="10">
       <n-grid-item :suffix="true">
-        <Input :word="inputs[0].value" @clear="clear(0)" @newWord="newWord" />
+        <Input :word="inputs[0].value" :isValidated="inputsValidated[0].value" @clear="clear(0)" @newWord="newWord" />
       </n-grid-item>
       <n-grid-item>
-        <Input :word="inputs[1].value" @clear="clear(1)" @newWord="newWord" />
+        <Input :word="inputs[1].value" :isValidated="inputsValidated[1].value" @clear="clear(1)" @newWord="newWord" />
       </n-grid-item>
       <n-grid-item>
-        <Input :word="inputs[2].value" @clear="clear(2)" @newWord="newWord" />
+        <Input :word="inputs[2].value" :isValidated="inputsValidated[2].value" @clear="clear(2)" @newWord="newWord" />
       </n-grid-item>
       <n-grid-item>
         <Suspense>
@@ -60,6 +119,7 @@ async function registerGame(id) {
         </Suspense>
       </n-grid-item>
     </n-grid>
+    <EndScreen v-model:show="gameFinished" @newUser="loadUser" :userID="userID"></EndScreen>
   </main>
   <footer>
     <n-button circle>
@@ -73,4 +133,3 @@ async function registerGame(id) {
 </template>
 
 <style scoped></style>
-

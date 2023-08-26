@@ -1,6 +1,5 @@
 <script setup>
 import { NCard, NModal, NText } from 'naive-ui'
-
 </script>
 
 <template>

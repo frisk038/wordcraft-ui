@@ -4,10 +4,9 @@ import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
 import { ref } from 'vue'
 
 const emit = defineEmits(['clear', 'newWord'])
-const props = defineProps(['word'])
+const props = defineProps(['word', 'isValidated'])
 const score = ref(10)
 const checking = ref(false)
-const isValidated = ref(false)
 
 async function checkAPI(wordToCheck) {
     let response = await fetch("https://wordcraft-397020.ew.r.appspot.com/pick/checkWord", {
@@ -28,7 +27,6 @@ async function check() {
     let scoreRes = await checkAPI(props.word)
     if (scoreRes.exists === true) {
         score.value = scoreRes.score
-        isValidated.value = true
         emit("newWord", score.value)
     }
     else {

@@ -30,10 +30,8 @@ import Help from './Help.vue'
                 </n-icon>
             </template>
         </n-button>
-
-
-
     </NSpace>
+
     <Help v-model:show="showModal"></Help>
 </template>
 
