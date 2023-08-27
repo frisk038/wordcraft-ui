@@ -1,6 +1,6 @@
 <script setup>
 import TitleBar from "./components/header/TitleBar.vue";
-import { NGrid, NGridItem, NIcon, NButton, NMessageProvider } from 'naive-ui'
+import { NGrid, NGridItem, NIcon, NButton, NMessageProvider, NSpace } from 'naive-ui'
 import { BulbOutline, BulbSharp } from '@vicons/ionicons5'
 import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
@@ -105,29 +105,33 @@ loadGame()
 </script>
 
 <template>
-  <header>
-    <TitleBar></TitleBar>
-  </header>
-  <main>
-    <n-grid :cols="1" :y-gap="10">
-      <n-grid-item :suffix="true">
-        <Input :word="inputs[0].value" :isValidated="inputsValidated[0].value" @clear="clear(0)" @newWord="newWord"
-          @notExist="wordDontExist" />
-      </n-grid-item>
-      <n-grid-item>
-        <Input :word="inputs[1].value" :isValidated="inputsValidated[1].value" @clear="clear(1)" @newWord="newWord"
-          @notExist="wordDontExist" />
-      </n-grid-item>
-      <n-grid-item>
-        <Input :word="inputs[2].value" :isValidated="inputsValidated[2].value" @clear="clear(2)" @newWord="newWord"
-          @notExist="wordDontExist" />
-      </n-grid-item>
-    </n-grid>
-    <Suspense>
-      <KeyBoard @type="type" @valid="registerGame" />
-    </Suspense>
+  <n-grid :cols="1" :y-gap="50">
+    <n-grid-item>
+      <TitleBar></TitleBar>
+    </n-grid-item>
+    <n-grid-item>
+      <n-grid :cols="1" :y-gap="10">
+        <n-grid-item :suffix="true">
+          <Input :word="inputs[0].value" :isValidated="inputsValidated[0].value" @clear="clear(0)" @newWord="newWord"
+            @notExist="wordDontExist" />
+        </n-grid-item>
+        <n-grid-item>
+          <Input :word="inputs[1].value" :isValidated="inputsValidated[1].value" @clear="clear(1)" @newWord="newWord"
+            @notExist="wordDontExist" />
+        </n-grid-item>
+        <n-grid-item>
+          <Input :word="inputs[2].value" :isValidated="inputsValidated[2].value" @clear="clear(2)" @newWord="newWord"
+            @notExist="wordDontExist" />
+        </n-grid-item>
+      </n-grid>
+    </n-grid-item>
+    <n-grid-item>
+      <Suspense>
+        <KeyBoard @type="type" @valid="registerGame" />
+      </Suspense>
+    </n-grid-item>
     <EndScreen v-model:show="gameFinished" @newUser="loadUser" :userID="userID"></EndScreen>
-  </main>
+  </n-grid>
   <footer>
     <n-button circle>
       <template #icon>
