@@ -1,6 +1,6 @@
 <script setup>
 import TitleBar from "./components/header/TitleBar.vue";
-import { NGrid, NGridItem, NIcon, NButton, NMessageProvider, NSpace } from 'naive-ui'
+import { NGrid, NGridItem, NIcon, NButton, NMessageProvider, NDivider } from 'naive-ui'
 import { BulbOutline, BulbSharp } from '@vicons/ionicons5'
 import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
@@ -105,11 +105,10 @@ loadGame()
 </script>
 
 <template>
-  <n-grid :cols="1" :y-gap="50">
+  <n-grid :cols="1" :y-gap="80">
     <n-grid-item>
       <TitleBar></TitleBar>
-    </n-grid-item>
-    <n-grid-item>
+      <n-divider />
       <n-grid :cols="1" :y-gap="10">
         <n-grid-item :suffix="true">
           <Input :word="inputs[0].value" :isValidated="inputsValidated[0].value" @clear="clear(0)" @newWord="newWord"
