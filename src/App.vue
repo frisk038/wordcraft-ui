@@ -137,7 +137,7 @@ loadGame()
       </template>
     </n-button>
   </footer>
-  <n-message-provider>
+  <n-message-provider placement="top-right">
     <Notification ref="notificationMgr"></Notification>
   </n-message-provider>
 </template>
