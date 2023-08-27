@@ -11,7 +11,7 @@ import { ref, onMounted } from 'vue'
 const inputs = [ref(""), ref(""), ref("")]
 const inputsValidated = [ref(false), ref(false), ref(false)]
 const notificationMgr = ref(null)
-var gameFinished = ref(false)
+const gameFinished = ref(false)
 var userID = ref("")
 var gameID = ref("")
 
@@ -92,6 +92,11 @@ async function registerGameAPI() {
   }
 }
 async function registerGame(id) {
+  if (finalScore === 0) {
+    notificationMgr.value.createMessage("Trouvez un mot d'abord !", "error")
+    return;
+  }
+
   gameID.value = id
   gameFinished.value = true
   setCookieAndExpireAtMidnight("gameDone", true)
@@ -129,18 +134,18 @@ loadGame()
         <KeyBoard @type="type" @valid="registerGame" />
       </Suspense>
     </n-grid-item>
-    <EndScreen v-model:show="gameFinished" @newUser="loadUser" :userID="userID"></EndScreen>
   </n-grid>
-  <footer>
-    <n-button circle>
-      <template #icon>
-        <n-icon>
-          <BulbSharp />
-        </n-icon>
-      </template>
-    </n-button>
-  </footer>
-  <n-message-provider placement="top-right">
+
+  <EndScreen v-model:show="gameFinished" @newUser="loadUser" :userID="userID"></EndScreen>
+  <n-button circle>
+    <template #icon>
+      <n-icon>
+        <BulbSharp />
+      </n-icon>
+    </template>
+  </n-button>
+
+  <n-message-provider placement="bottom-right">
     <Notification ref="notificationMgr"></Notification>
   </n-message-provider>
 </template>

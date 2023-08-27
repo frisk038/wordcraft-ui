@@ -47,7 +47,7 @@ const res = await getLetters()
         </n-grid>
 
         <n-grid :cols="4" x-gap="15">
-            <n-grid-item v-for="(item, index) in secondRow" :key="index">
+            <n-grid-item v-for="(item, index) in secondRow" :key="index" style="{ color: red }">
                 <n-button @click="$emit('type', item)" circle>
                     <template #icon>
                         <n-icon>
