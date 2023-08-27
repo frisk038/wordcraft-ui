@@ -3,7 +3,7 @@ import { NInput, NSpace, NIcon, NButton, NCard, NSpin, NStatistic, NNumberAnimat
 import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
 import { ref } from 'vue'
 
-const emit = defineEmits(['clear', 'newWord'])
+const emit = defineEmits(['clear', 'newWord', 'notExist'])
 const props = defineProps(['word', 'isValidated'])
 const score = ref(10)
 const checking = ref(false)
@@ -30,7 +30,7 @@ async function check() {
         emit("newWord", score.value)
     }
     else {
-        emit("clear")
+        emit("notExist")
     }
     checking.value = false
 }

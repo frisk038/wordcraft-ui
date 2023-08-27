@@ -1,20 +1,22 @@
 <script setup>
 import TitleBar from "./components/header/TitleBar.vue";
-import { NGrid, NGridItem, NIcon, NButton } from 'naive-ui'
+import { NGrid, NGridItem, NIcon, NButton, NMessageProvider } from 'naive-ui'
 import { BulbOutline, BulbSharp } from '@vicons/ionicons5'
 import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
 import EndScreen from "./components/main/Endscreen.vue"
-import { ref } from 'vue'
+import Notification from "./components/main/Notification.vue";
+import { ref, onMounted } from 'vue'
 
 const inputs = [ref(""), ref(""), ref("")]
 const inputsValidated = [ref(false), ref(false), ref(false)]
-
-var currentInput = 0
-var finalScore = 0
+const notificationMgr = ref(null)
 var gameFinished = ref(false)
 var userID = ref("")
 var gameID = ref("")
+
+var currentInput = 0
+var finalScore = 0
 
 function loadGame() {
   const str = getCookie("gameDone")
@@ -53,11 +55,16 @@ function type(letter) {
 function clear(idx) {
   inputs[idx].value = ""
 }
+function wordDontExist() {
+  clear(currentInput)
+  notificationMgr.value.createMessage("Ce mot n'existe pas !", "error")
+}
 function newWord(score) {
   for (let index = 0; index < currentInput; index++) {
     const element = inputs[index];
     if (element.value === inputs[currentInput].value) {
       clear(currentInput)
+      notificationMgr.value.createMessage("Mot déjà saisi !", "warning")
       return
     }
   }
@@ -102,23 +109,23 @@ loadGame()
     <TitleBar></TitleBar>
   </header>
   <main>
-
     <n-grid :cols="1" :y-gap="10">
       <n-grid-item :suffix="true">
-        <Input :word="inputs[0].value" :isValidated="inputsValidated[0].value" @clear="clear(0)" @newWord="newWord" />
+        <Input :word="inputs[0].value" :isValidated="inputsValidated[0].value" @clear="clear(0)" @newWord="newWord"
+          @notExist="wordDontExist" />
       </n-grid-item>
       <n-grid-item>
-        <Input :word="inputs[1].value" :isValidated="inputsValidated[1].value" @clear="clear(1)" @newWord="newWord" />
+        <Input :word="inputs[1].value" :isValidated="inputsValidated[1].value" @clear="clear(1)" @newWord="newWord"
+          @notExist="wordDontExist" />
       </n-grid-item>
       <n-grid-item>
-        <Input :word="inputs[2].value" :isValidated="inputsValidated[2].value" @clear="clear(2)" @newWord="newWord" />
-      </n-grid-item>
-      <n-grid-item>
-        <Suspense>
-          <KeyBoard @type="type" @valid="registerGame" />
-        </Suspense>
+        <Input :word="inputs[2].value" :isValidated="inputsValidated[2].value" @clear="clear(2)" @newWord="newWord"
+          @notExist="wordDontExist" />
       </n-grid-item>
     </n-grid>
+    <Suspense>
+      <KeyBoard @type="type" @valid="registerGame" />
+    </Suspense>
     <EndScreen v-model:show="gameFinished" @newUser="loadUser" :userID="userID"></EndScreen>
   </main>
   <footer>
@@ -130,6 +137,9 @@ loadGame()
       </template>
     </n-button>
   </footer>
+  <n-message-provider>
+    <Notification ref="notificationMgr"></Notification>
+  </n-message-provider>
 </template>
 
 <style scoped></style>

@@ -32,7 +32,7 @@ async function registerUser() {
 </script>
 
 <template>
-    <n-modal preset="card" title="👏🏾 Bravo" style="width: 500px">
+    <n-modal preset="card" title="👏🏾 Bravo" style="width: 65%">
         <n-card :bordered="false" size="small">
             <n-space :vertical="true" align="center" v-if="userID">
                 <n-text depth="1">
