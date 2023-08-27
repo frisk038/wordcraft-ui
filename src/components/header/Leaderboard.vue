@@ -1,11 +1,13 @@
 <script setup>
 import { NCard, NModal, NSpace, NDataTable } from 'naive-ui'
 import { ClipboardOutline } from '@vicons/ionicons5'
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const props = defineProps(['gameID'])
 
-const data = [
+const data = ref([])
+
+let b = [
     {
         key: 0,
         name: 'John Brown',
@@ -35,21 +37,18 @@ const columns = [
 ]
 
 async function getLeaderBoard() {
-    let api = await fetch("https://wordcraft-397020.ew.r.appspot.com/user/register", {
-        method: "POST",
-        body: JSON.stringify({
-            name: userInput.value.toUpperCase()
-        })
-    })
+    let api = await fetch("https://wordcraft-397020.ew.r.appspot.com/user/leaderboard")
     if (api.ok) {
         const resp = await api.json()
-        setCookieAndExpire("userid", resp.id, new Date("2030/01/01"))
-        emit("newUser")
+        data.value = resp
     }
     else {
         return Promise.reject(response);
     }
 }
+
+
+getLeaderBoard()
 </script>
 
 <template>

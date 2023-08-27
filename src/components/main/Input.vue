@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 const emit = defineEmits(['clear', 'newWord', 'notExist'])
 const props = defineProps(['word', 'isValidated'])
-const score = ref(10)
+const score = ref(0)
 const checking = ref(false)
 
 async function checkAPI(wordToCheck) {

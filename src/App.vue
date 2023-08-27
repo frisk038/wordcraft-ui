@@ -12,6 +12,7 @@ const inputs = [ref(""), ref(""), ref("")]
 const inputsValidated = [ref(false), ref(false), ref(false)]
 const notificationMgr = ref(null)
 const gameFinished = ref(false)
+const showEndScreen = ref(false)
 var userID = ref("")
 var gameID = ref("")
 
@@ -19,9 +20,52 @@ var currentInput = 0
 var finalScore = 0
 
 function loadGame() {
-  const str = getCookie("gameDone")
+  console.log(gameFinished.value)
+  var str = getCookie("gameDone")
   gameFinished.value = (str === "true");
   userID.value = getCookie("userid")
+
+  str = getCookie("words")
+  if (str) {
+    let jsInput = str.split(",")
+    for (let index = 0; index < jsInput.length; index++) {
+      const element = jsInput[index];
+      inputs[index].value = element
+    }
+  }
+
+  str = getCookie("inputValid")
+  if (str) {
+    let jsInput = str.split(",")
+    for (let index = 0; index < jsInput.length; index++) {
+      const element = jsInput[index];
+      inputsValidated[index].value = element === "true"
+    }
+  }
+  showEndScreen.value = gameFinished.value
+}
+
+function saveGame() {
+  setCookieAndExpireAtMidnight("gameDone", true)
+
+  let jsInput = []
+  for (const key in inputs) {
+    if (Object.hasOwnProperty.call(inputs, key)) {
+      const element = inputs[key];
+      jsInput.push(element.value)
+    }
+  }
+  setCookieAndExpireAtMidnight("words", jsInput)
+
+  let jsInputValidated = []
+  for (const key in inputsValidated) {
+    if (Object.hasOwnProperty.call(inputsValidated, key)) {
+      const element = inputsValidated[key];
+      jsInputValidated.push(element.value)
+    }
+  }
+  setCookieAndExpireAtMidnight("inputValid", jsInputValidated)
+
 }
 
 // Cookie helper
@@ -99,7 +143,8 @@ async function registerGame(id) {
 
   gameID.value = id
   gameFinished.value = true
-  setCookieAndExpireAtMidnight("gameDone", true)
+  showEndScreen.value = true
+  saveGame()
 
   if (userID.value != "") {
     registerGameAPI()
@@ -131,12 +176,12 @@ loadGame()
     </n-grid-item>
     <n-grid-item>
       <Suspense>
-        <KeyBoard @type="type" @valid="registerGame" />
+        <KeyBoard @type="type" @valid="registerGame" :gameFinished="gameFinished" :userID="userID" />
       </Suspense>
     </n-grid-item>
   </n-grid>
 
-  <EndScreen v-model:show="gameFinished" @newUser="loadUser" :userID="userID"></EndScreen>
+  <EndScreen v-model:show="showEndScreen" @newUser="loadUser" :userID="userID"></EndScreen>
   <n-button circle>
     <template #icon>
       <n-icon>

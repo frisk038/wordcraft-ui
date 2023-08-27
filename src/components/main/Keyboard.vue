@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { NButton, NIcon, NGrid, NGridItem, NSpace } from 'naive-ui'
-import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
+import { CheckmarkSharp } from '@vicons/ionicons5'
 
 defineEmits(['type', 'valid'])
+defineProps(['userID', 'gameFinished'])
 
 const letters = ref([])
 const gameID = ref("")
@@ -34,7 +35,7 @@ const res = await getLetters()
     <n-space justify="center" align="center" :wrap="true" size="small" :vertical="true">
         <n-grid :cols="5" x-gap="15">
             <n-grid-item v-for="(item, index) in firstRow" :key="index">
-                <n-button @click="$emit('type', item)" circle>
+                <n-button @click="$emit('type', item)" circle :disabled="gameFinished">
                     <template #icon>
                         <n-icon>
                             <svg viewBox="0 0 111 111">
@@ -48,7 +49,7 @@ const res = await getLetters()
 
         <n-grid :cols="4" x-gap="15">
             <n-grid-item v-for="(item, index) in secondRow" :key="index" style="{ color: red }">
-                <n-button @click="$emit('type', item)" circle>
+                <n-button @click="$emit('type', item)" circle :disabled="gameFinished">
                     <template #icon>
                         <n-icon>
                             <svg viewBox="0 0 111 111">
@@ -60,7 +61,7 @@ const res = await getLetters()
             </n-grid-item>
         </n-grid>
 
-        <n-button @click="$emit('valid', gameID)" circle>
+        <n-button @click="$emit('valid', gameID)" circle :disabled="gameFinished">
             <template #icon>
                 <n-icon>
                     <CheckmarkSharp />
