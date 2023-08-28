@@ -173,6 +173,22 @@ async function registerGame(id) {
   }
 }
 
+function getText() {
+  let text = "WordCraft\n\n"
+  text += `Mon score est de ${finalScore}, tu peux faire mieux ?\n`
+  text += `Allez tente https://iwordcraft.netlify.app`
+  return text
+}
+
+async function copyToClipboard() {
+  try {
+    await navigator.clipboard.writeText(getText());
+    notificationMgr.value.createMessage("Votre score est copié !", "info")
+  } catch {
+    notificationMgr.value.createMessage("Votre score n'a pas pu etre copié !", "error")
+  }
+}
+
 loadGame()
 </script>
 
@@ -203,7 +219,7 @@ loadGame()
     </n-grid-item>
   </n-grid>
 
-  <EndScreen v-model:show="showEndScreen" @newUser="loadUser" :userID="userID"></EndScreen>
+  <EndScreen v-model:show="showEndScreen" @newUser="loadUser" @copy="copyToClipboard" :userID="userID"></EndScreen>
 
   <n-message-provider placement="bottom-right">
     <Notification ref="notificationMgr"></Notification>

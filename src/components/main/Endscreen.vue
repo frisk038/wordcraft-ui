@@ -3,7 +3,7 @@ import { NCard, NModal, NText, NButton, NSpace, NIcon, NInput } from 'naive-ui'
 import { ClipboardOutline, SaveOutline } from '@vicons/ionicons5'
 import { ref } from "vue";
 
-const emit = defineEmits(['newUser'])
+const emit = defineEmits(['newUser', 'copy'])
 const props = defineProps(['userID'])
 const userInput = ref('')
 
@@ -28,7 +28,6 @@ async function registerUser() {
         return Promise.reject(response);
     }
 }
-
 </script>
 
 <template>
@@ -40,7 +39,7 @@ async function registerUser() {
                     Vous pouvez cliquer sur le bouton 📋 ci-dessous pour copier et partager votre score ! <br>
                     Vous pouvez aussi voir votre classement en cliquant sur le bouton 📊 en haut a gauche.
                 </n-text>
-                <n-button circle size="large">
+                <n-button circle size="large" @click="$emit('copy')">
                     <template #icon>
                         <n-icon>
                             <ClipboardOutline />
