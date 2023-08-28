@@ -61,7 +61,7 @@ const res = await getLetters()
             </n-grid-item>
         </n-grid>
 
-        <n-button @click="$emit('valid', gameID)" round :disabled="gameFinished">
+        <n-button @click="$emit('valid', gameID)" round :disabled="gameFinished" style="margin-top: 20px;height: 50px;">
             <template #icon>
                 <n-icon>
                     <CheckmarkSharp />
