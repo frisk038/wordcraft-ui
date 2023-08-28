@@ -1,5 +1,5 @@
 <script setup>
-import { NCard, NModal, NSpace, NDataTable } from 'naive-ui'
+import { NCard, NModal, NSpace, NDataTable, NText } from 'naive-ui'
 import { ClipboardOutline } from '@vicons/ionicons5'
 import { ref, onMounted } from "vue";
 
@@ -54,7 +54,10 @@ getLeaderBoard()
 <template>
     <n-modal preset="card" title="🏆 Classement" style="width: 65%">
         <n-card :bordered="false" size="small">
-            <n-data-table :columns="columns" :data="data" />
+            <n-data-table :columns="columns" :data="data" v-if="data.length > 0" />
+            <n-text v-else>
+                Les meilleurs joueurs seront affichés ici !
+            </n-text>
         </n-card>
     </n-modal>
 </template>

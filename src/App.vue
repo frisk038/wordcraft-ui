@@ -13,8 +13,8 @@ const inputsValidated = [ref(false), ref(false), ref(false)]
 const notificationMgr = ref(null)
 const gameFinished = ref(false)
 const showEndScreen = ref(false)
-var userID = ref("")
-var gameID = ref("")
+const userID = ref("")
+const gameID = ref("")
 
 var currentInput = 0
 var finalScore = 0
@@ -182,13 +182,6 @@ loadGame()
   </n-grid>
 
   <EndScreen v-model:show="showEndScreen" @newUser="loadUser" :userID="userID"></EndScreen>
-  <n-button circle>
-    <template #icon>
-      <n-icon>
-        <BulbSharp />
-      </n-icon>
-    </template>
-  </n-button>
 
   <n-message-provider placement="bottom-right">
     <Notification ref="notificationMgr"></Notification>
