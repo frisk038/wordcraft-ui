@@ -1,12 +1,12 @@
 <script setup>
 import TitleBar from "./components/header/TitleBar.vue";
-import { NGrid, NGridItem, NIcon, NButton, NMessageProvider, NDivider } from 'naive-ui'
+import { NGrid, NGridItem, NMessageProvider, NDivider } from 'naive-ui'
 import confetti from 'canvas-confetti'
 import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
 import EndScreen from "./components/main/Endscreen.vue"
 import Notification from "./components/main/Notification.vue";
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 const inputs = [ref(""), ref(""), ref("")]
 const inputsValidated = [ref(false), ref(false), ref(false)]
@@ -20,7 +20,6 @@ var currentInput = 0
 var finalScore = 0
 
 function loadGame() {
-  console.log(gameFinished.value)
   var str = getCookie("gameDone")
   gameFinished.value = (str === "true");
   userID.value = getCookie("userid")
@@ -43,6 +42,16 @@ function loadGame() {
     }
   }
   showEndScreen.value = gameFinished.value
+
+  str = getCookie("score")
+  if (str) {
+    finalScore = parseInt(str)
+  }
+
+  str = getCookie("gameID")
+  if (str) {
+    gameID.value = str
+  }
 }
 
 function saveGame() {
@@ -65,7 +74,8 @@ function saveGame() {
     }
   }
   setCookieAndExpireAtMidnight("inputValid", jsInputValidated)
-
+  setCookieAndExpireAtMidnight("score", finalScore)
+  setCookieAndExpireAtMidnight("gameID", gameID.value)
 }
 
 // Cookie helper
