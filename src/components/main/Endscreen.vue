@@ -50,7 +50,7 @@ async function registerUser() {
 
             <n-space :vertical="true" align="center" v-else>
                 <n-text depth="1">
-                    Enrengistre ton score 📝, et pose ta place dans le classement en entrant un pseudo 🏆
+                    Enregistre ton score 📝, et pose ta place dans le classement en entrant un pseudo 🏆
                 </n-text>
                 <n-space align="center">
                     <n-input maxlength="5" show-count placeholder="un pseudo sympa" v-model:value="userInput"

@@ -176,7 +176,7 @@ async function registerGame(id) {
 function getText() {
   let text = "WordCraft\n\n"
   text += `Mon score est de ${finalScore}, tu peux faire mieux ?\n`
-  text += `Allez tente https://iwordcraft.netlify.app`
+  text += `Tente ta chance ici https://iwordcraft.netlify.app`
   return text
 }
 
