@@ -1,5 +1,5 @@
 <script setup>
-import { NInput, NSpace, NIcon, NButton, NCard, NSpin, NStatistic, NNumberAnimation, NLayout } from 'naive-ui'
+import { NInput, NSpace, NIcon, NButton, NSpin, NStatistic, NNumberAnimation } from 'naive-ui'
 import { CloseSharp, CheckmarkSharp } from '@vicons/ionicons5'
 import { ref } from 'vue'
 
@@ -35,6 +35,7 @@ async function check() {
     checking.value = false
 }
 </script >
+
 <template>
     <n-spin :show="checking" size="small">
         <n-space justify="center" align="center">
@@ -64,8 +65,3 @@ async function check() {
 
     </n-spin>
 </template>
-<script>
-
-
-</script>
-<style></style>

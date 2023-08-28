@@ -1,7 +1,7 @@
 <script setup>
 import TitleBar from "./components/header/TitleBar.vue";
 import { NGrid, NGridItem, NIcon, NButton, NMessageProvider, NDivider } from 'naive-ui'
-import { BulbOutline, BulbSharp } from '@vicons/ionicons5'
+import confetti from 'canvas-confetti'
 import Input from "./components/main/Input.vue"
 import KeyBoard from "./components/main/Keyboard.vue"
 import EndScreen from "./components/main/Endscreen.vue"
@@ -122,6 +122,12 @@ function newWord(score) {
 async function loadUser() {
   userID.value = getCookie("userid")
   registerGameAPI()
+  confetti({
+    particleCount: 100,
+    spread: 100,
+    origin: { x: 0.5, y: 0.8 },
+    zIndex: 999,
+  });
 }
 async function registerGameAPI() {
   let response = await fetch("https://wordcraft-397020.ew.r.appspot.com/user/score", {
@@ -148,6 +154,12 @@ async function registerGame(id) {
 
   if (userID.value != "") {
     registerGameAPI()
+    confetti({
+      particleCount: 100,
+      spread: 100,
+      origin: { x: 0.5, y: 0.8 },
+      zIndex: 999,
+    })
   }
 }
 
