@@ -52,7 +52,7 @@ getLeaderBoard()
 </script>
 
 <template>
-    <n-modal preset="card" title="🏆 Classement" style="width: 65%">
+    <n-modal preset="card" title="🏆 Classement" style="width: 90%">
         <n-text>
             Voici les meilleurs joueurs de la journée !
         </n-text>
