@@ -53,7 +53,11 @@ getLeaderBoard()
 
 <template>
     <n-modal preset="card" title="🏆 Classement" style="width: 65%">
-        <n-card :bordered="false" size="small">
+        <n-text>
+            Voici les meilleurs joueurs de la journée !
+        </n-text>
+        <n-card :bordered="false" size="medium">
+
             <n-data-table :columns="columns" :data="data" v-if="data.length > 0" />
             <n-text v-else>
                 Les meilleurs joueurs seront affichés ici !

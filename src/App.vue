@@ -155,7 +155,7 @@ loadGame()
 </script>
 
 <template>
-  <n-grid :cols="1" :y-gap="80">
+  <n-grid :cols="1" :y-gap="70">
     <n-grid-item>
       <TitleBar></TitleBar>
       <n-divider />

@@ -35,7 +35,7 @@ const res = await getLetters()
     <n-space justify="center" align="center" :wrap="true" size="small" :vertical="true">
         <n-grid :cols="5" x-gap="15">
             <n-grid-item v-for="(item, index) in firstRow" :key="index">
-                <n-button @click="$emit('type', item)" circle :disabled="gameFinished">
+                <n-button @click="$emit('type', item)" circle :disabled="gameFinished" class="custInput">
                     <template #icon>
                         <n-icon>
                             <svg viewBox="0 0 111 111">
@@ -49,7 +49,7 @@ const res = await getLetters()
 
         <n-grid :cols="4" x-gap="15">
             <n-grid-item v-for="(item, index) in secondRow" :key="index" style="{ color: red }">
-                <n-button @click="$emit('type', item)" circle :disabled="gameFinished">
+                <n-button @click="$emit('type', item)" circle :disabled="gameFinished" class="custInput">
                     <template #icon>
                         <n-icon>
                             <svg viewBox="0 0 111 111">
@@ -61,17 +61,21 @@ const res = await getLetters()
             </n-grid-item>
         </n-grid>
 
-        <n-button @click="$emit('valid', gameID)" circle :disabled="gameFinished">
+        <n-button @click="$emit('valid', gameID)" round :disabled="gameFinished">
             <template #icon>
                 <n-icon>
                     <CheckmarkSharp />
                 </n-icon>
             </template>
+            Soumettre
         </n-button>
     </n-space>
 </template>
 
   
-<script>
-
-</script>
+<style scoped>
+.custInput {
+    height: 60px;
+    width: 60px;
+}
+</style>
