@@ -67,7 +67,7 @@ const res = await getLetters()
                     <CheckmarkSharp />
                 </n-icon>
             </template>
-            Soumettre
+            Soumettre vos mots
         </n-button>
     </n-space>
 </template>
