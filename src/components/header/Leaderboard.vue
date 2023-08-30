@@ -1,6 +1,5 @@
 <script setup>
 import { NCard, NModal, NSpace, NDataTable, NText } from 'naive-ui'
-import { ClipboardOutline } from '@vicons/ionicons5'
 import { ref, onMounted } from "vue";
 
 const props = defineProps(['gameID'])
@@ -37,6 +36,7 @@ const columns = [
 ]
 
 async function getLeaderBoard() {
+    console.log("oo")
     let api = await fetch("https://wordcraft-397020.ew.r.appspot.com/user/leaderboard")
     if (api.ok) {
         const resp = await api.json()
@@ -46,13 +46,10 @@ async function getLeaderBoard() {
         return Promise.reject(response);
     }
 }
-
-
-getLeaderBoard()
 </script>
 
 <template>
-    <n-modal preset="card" title="🏆 Classement" style="width: 90%">
+    <n-modal preset="card" title="🏆 Classement" style="width: 90%" :on-after-enter="() => getLeaderBoard()">
         <n-text>
             Voici les meilleurs joueurs de la journée !
         </n-text>
